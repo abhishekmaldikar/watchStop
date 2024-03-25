@@ -24,7 +24,7 @@ function App() {
       <div>
       <h1>Stopwatch</h1>
       <p style={{ display: "inline" }}>Time : </p>
-      <span>{Math.floor(time / 60000) % 60}</span>:<span>{Math.floor(time / 1000) % 60}</span>
+      <span>{Math.floor(time / 60000) % 60}</span>:<span>{(Math.floor(time / 1000) % 60) === 0 ? "00" : Math.floor(time / 1000) % 60}</span>
       <br />
       {state ? (
         <button style={{marginRight : "4px"}} onClick={() => setState(false)}>Start</button>
