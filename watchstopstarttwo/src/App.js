@@ -1,38 +1,42 @@
-import "./App.css";
 import React, { useState, useEffect } from "react";
 
 function App() {
-
-  const [time, settime] = useState(0);
-  const [state, setState] = useState(true);
+  const [time, setTime] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
 
   useEffect(() => {
-    if(!state){
-      window.interval = setInterval(() => {settime((prev) => prev + 1000)},1000);
-    }else{
-      clearInterval(window.interval);
+    let intervalId;
+    if (isRunning) {
+      intervalId = setInterval(() => {
+        setTime((prevTime) => prevTime + 1000);
+      }, 1000);
+    } else {
+      clearInterval(intervalId);
     }
-    return () => clearInterval(window.interval);
-  }, [state]);
+    return () => clearInterval(intervalId);
+  }, [isRunning]);
 
-  function clearTimeOut() {
-    clearInterval(window.interval);
-    settime(0);
+  function handleStartStop() {
+    setIsRunning(!isRunning);
   }
+
+  function handleReset() {
+    setIsRunning(false);
+    setTime(0);
+  }
+
+  function formatTime(time) {
+    const minutes = Math.floor(time / 60000);
+    const seconds = Math.floor((time % 60000) / 1000);
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  }
+
   return (
     <div className="App">
-      <div>
       <h1>Stopwatch</h1>
-      <p style={{ display: "inline" }}>Time: </p>
-      <span>{Math.floor(time / 60000) % 60}</span>:<span>{(Math.floor(time / 1000) % 60) === 0 ? "00" : Math.floor(time / 1000) % 60}</span>
-      <br />
-      {state ? (
-        <button style={{marginRight : "4px"}} onClick={() => setState(false)}>Start</button>
-      ) : (
-        <button style={{marginRight : "4px"}} onClick={() => setState(true)}>Stop</button>
-      )}
-      <button onClick={() => clearTimeOut()}>Reset</button>
-      </div>
+      <p>Time: {formatTime(time)}</p>
+      <button onClick={handleStartStop}>{isRunning ? "Stop" : "Start"}</button>
+      <button onClick={handleReset}>Reset</button>
     </div>
   );
 }
