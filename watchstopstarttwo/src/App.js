@@ -27,11 +27,11 @@ function App() {
       <span>{Math.floor(time / 60000) % 60}</span>:<span>{Math.floor(time / 1000) % 60}</span>
       <br />
       {state ? (
-        <button style={{marginRight : "4px"}} onClick={() => setState(false)}>start</button>
+        <button style={{marginRight : "4px"}} onClick={() => setState(false)}>Start</button>
       ) : (
-        <button style={{marginRight : "4px"}} onClick={() => setState(true)}>stop</button>
+        <button style={{marginRight : "4px"}} onClick={() => setState(true)}>Stop</button>
       )}
-      <button onClick={() => clearTimeOut()}>reset</button>
+      <button onClick={() => clearTimeOut()}>Reset</button>
       </div>
     </div>
   );
